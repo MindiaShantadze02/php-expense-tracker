@@ -1,0 +1,9 @@
+label {
+    color: #d3d3d3;
+}
+.filter-div-off {
+    display: none;
+}
+.filter-div-on {
+    display: block;
+}
