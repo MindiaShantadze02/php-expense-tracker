@@ -7,3 +7,10 @@ label {
 .filter-div-on {
     display: block;
 }
+th {
+    font-weight: bold;
+    font-size: 14px;
+}
+.delete-form {
+    display: inline-block;
+}

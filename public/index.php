@@ -1,3 +1,10 @@
+<?php 
+
+$ds = DIRECTORY_SEPARATOR;
+require_once __DIR__.$ds.'..'.$ds.'database'.$ds.'getdata.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,21 +19,24 @@
 
 <body>
     <div class="container mt-4">
-            <a class="navbar-brand">
-                <h1>PHP Expense Tracker</h1>
-            </a>
+        <a class="navbar-brand">
+            <h1>PHP Expense Tracker</h1>
+        </a>
         <nav class="navbar navbar-light bg-dark justify-content-between">
             <button class="btn btn-info filter-button">Filter</button>
+            <a href="create.php" class="btn btn-success">Add New Expense</a>
             <div class="container mt-4">
                 <div class="filter-div-off">
                     <form method="get">
                         <div class="form-group">
                             <label>Enter Title</label>
-                            <input class="form-control mr-sm-2" type="text" name='search' placeholder="Search" aria-label="Search">
+                            <input class="form-control mr-sm-2" type="text" name='search' placeholder="Search"
+                                aria-label="Search">
                         </div>
                         <div class="form-group">
                             <label for="range">Max Amount: <b class="range-output"></b></label>
-                            <input id='range' max='10000' min='0' class="form-control mr-sm-2 range" type="range" name="amount_range">
+                            <input id='range' max='10000' min='-10000' class="form-control mr-sm-2 range" type="range"
+                                name="amount_range">
                         </div>
                         <div class="form-group">
                             <label>Date</label>
@@ -37,7 +47,7 @@
                 </div>
             </div>
         </nav>
-        <table class="table table-dark">
+        <table class="table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -48,17 +58,29 @@
                 </tr>
             </thead>
             <tbody>
+                <?php foreach($expenses as $i => $expense): ?>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Bought Phone</td>
-                    <td>Bought Samsung Galaxy Phone</td>
-                    <td>$500</td>
-                    <td>25/25/2021</td>
+                    <th scope="row"><?= ($i + 1) ?></th>
+                    <td><?= $expense['title'] ?></td>
+                    <td><?= $expense['description'] ?></td>
+                    <td><?= $expense['amount'] ?></td>
+                    <td><?= $expense['date'] ?></td>
+                    <td class="buttons">
+                        <button class='btn btn-success'>Edit</button>
+                        <form action="delete.php" method="POST" class="delete-form">
+                            <input type="hidden" name="id" value="<?= $expense['id'] ?>">
+                            <button class="btn btn-outline-danger" type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
+                <?php endforeach ?>
             </tbody>
         </table>
+        <?php if (!$expenses): ?>
+        <h2 class="text-center">No Expenses</h2>
+        <?php endif ?>
     </div>
-    
+
     <script src="./script.js"></script>
 </body>
 
