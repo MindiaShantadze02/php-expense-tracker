@@ -2,6 +2,7 @@
 
 $ds = DIRECTORY_SEPARATOR;
 require_once __DIR__.$ds.'..'.$ds.'database'.$ds.'getdata.php';
+require_once '../actions/format.php';
 
 ?>
 
@@ -63,7 +64,11 @@ require_once __DIR__.$ds.'..'.$ds.'database'.$ds.'getdata.php';
                     <th scope="row"><?= ($i + 1) ?></th>
                     <td><?= $expense['title'] ?></td>
                     <td><?= $expense['description'] ?></td>
-                    <td><?= $expense['amount'] ?></td>
+                    <?php if ((float)$expense['amount'] > 0): ?>
+                        <td class="text-success"><?= formatAmount($expense['amount']) ?></td>
+                    <?php else: ?>
+                        <td class="text-danger"><?= formatAmount($expense['amount']) ?></td>
+                    <?php endif ?>
                     <td><?= $expense['date'] ?></td>
                     <td class="buttons">
                         <button class='btn btn-success'>Edit</button>
